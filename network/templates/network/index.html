@@ -1,0 +1,20 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div>
+        <form id="compose-form">
+            {{form}}
+            <input type="submit">
+        </form>
+    </div>
+
+    <div id="posts-display">
+
+    </div>
+    
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
+{% endblock %}
