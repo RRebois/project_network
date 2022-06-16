@@ -4,11 +4,10 @@ from .models import *
 class LikeAdmin(admin.ModelAdmin):
     filter_horizontal = ('likers', 'haters',)
 
-class FollowAdmin(admin.ModelAdmin):
-    filter_horizontal = ('followers',)
+class UserAdmin(admin.ModelAdmin):
+    filter_horizontal = ('following',)
 
 # Register your models here.
-admin.site.register(User)
+admin.site.register(User, UserAdmin)
 admin.site.register(newPost)
 admin.site.register(Like, LikeAdmin)
-admin.site.register(Follow, FollowAdmin)

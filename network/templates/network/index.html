@@ -2,16 +2,43 @@
 {% load static %}
 
 {% block body %}
-    <div>
-        <form id="compose-form">
-            {{form}}
-            <input type="submit">
+    
+    <div id="postComment">
+        <h3>New post</h3>
+    </br>
+        <form id="compose-form" method="POST">
+            {% csrf_token %} 
+            {% for field in form%}
+                {{field}}
+            {% endfor %}
+        </br>
+            <!--<textarea autofocus id="compose-content"></textarea>-->
+            <input type="submit" value="Post" class="btn btn-primary left">
         </form>
     </div>
 
-    <div id="posts-display">
-
+    <div id="followDiv">
+        <!--<button class="btn btn-primary"></button>-->
     </div>
+
+    <div id ="allposts">
+        <h3>All Posts</h3>
+        <div id="divposts">
+            
+        </div>
+    </div>
+
+    <div id ="pageControl">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item btn page-link" id="first" style="margin-right:1em">First</li>
+                <li class="page-item btn page-link" id="previous">Previous</li>
+                <li class="page-item btn page-link" id="next">Next</li>
+                <li class="page-item btn page-link" id="last" style="margin-left:1em">Last</li>
+            </ul>
+          </nav>
+    </div>
+    
     
 {% endblock %}
 

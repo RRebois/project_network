@@ -1,0 +1,130 @@
+$colors: (
+    greyish: #7393B3,
+    blackish: #000000,
+    GunmetalGray: #818589,
+    whitish: #ffffff,
+    ceriseRed: #DE3163,
+);
+
+body {
+    background: map-get($colors,greyish);
+}
+
+textarea {
+    width:90%;
+    height: 150px;
+    resize: none;
+}
+
+%content {
+    max-width: 80%;
+    text-align: center;
+    margin-left: 10%;
+    border: 1px solid map-get($colors, blackish);
+    background: map-get($colors, whitish);
+}
+
+.left {
+    float:left;
+    margin-left: 5%;
+}
+
+#postComment {
+    @extend %content;
+    height: 300px;
+    margin-bottom: 20px;
+    margin-top:20px;
+}
+
+#allposts {
+    @extend %content;
+    margin-bottom: 20px;
+}
+
+.elementPost {
+    margin: 20px 5% 20px 5%;
+    width:90%;
+    text-align: left;
+    height: fit-content;
+    border: 1px solid map-get($colors, blackish);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 20px;
+}
+
+.postUser {
+    width:90%;
+    margin-left: 5%;  
+    margin-bottom: 5px;
+}
+
+.elementUser {
+    font-family: sans-serif;
+    font-weight: bold;
+    color: map-get($colors, blackish);
+    .nav-item &{ // if parent (& = parent operator) has class of .nav-item, then margin: 0px, else margin: 5px;
+        &:hover {
+        text-decoration: none;// ne souligne pas le texte
+        color: map-get($colors, greyish);
+        }
+    }
+    &:hover {
+        text-decoration: none;// ne souligne pas le texte
+        color: map-get($colors, greyish);
+    }
+}
+
+.followersDiv {
+    width: 90%;
+    height: fit-content;
+    margin: 5px 5%;
+}
+
+.elementTime {
+    margin: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: map-get($colors, GunmetalGray);
+}
+
+#followDiv {
+    @extend %content;
+    height: 300px;
+    margin-bottom: 20px;
+    margin-top:20px;
+}
+
+.postContent {
+    width: 95%;
+    margin-left: 2.5%;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 16px;
+    font-weight: normal;
+    border-top: 1px solid map-get($colors, blackish);
+    border-bottom: 1px solid map-get($colors, blackish);
+    color: map-get($colors, blackish);
+}
+
+.postLike {
+    text-align: center;
+    width: 90%;
+    margin: 5px 5%;
+}
+
+%likes{
+    font-size: 20px;
+}
+
+.likeHeart {
+    @extend %likes;
+    color: map-get($colors, ceriseRed);
+}
+
+.dislikeHeart {
+    @extend %likes;
+    color: map-get($colors, blackish);
+}
+
+h3 {
+    font: bolder;
+}

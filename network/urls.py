@@ -13,7 +13,9 @@ urlpatterns = [
     # when we fetch at url post, if to post a comment: aka via the POST request.
     # then we need urls to GET the data
     path("post", views.compose, name="compose"), # POST API
-    path("posts", views.collect, name="collect"), # GET API
-    path("posts/<int:post_id>", views.posts, name="posts"),
-    path("follow", views.follow, name="follow"),
+    path("posts", views.collect, name="collect"), # GET API all posts
+    path("posts/<int:page>", views.pages, name="pages"), # GET API 10 posts for pagination ALL POSTS
+    path("posts/<str:word>/<int:page>", views.postsUser, name="postsUser"), # Access user posts
+    path("follow/<str:word>", views.follow, name="follow"), # Access user follows
+#    path("posts/<int:post_id>", views.posts, name="posts"),
 ]

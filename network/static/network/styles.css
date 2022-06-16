@@ -1,0 +1,117 @@
+body {
+  background: #7393B3;
+}
+
+textarea {
+  width: 90%;
+  height: 150px;
+  resize: none;
+}
+
+#followDiv, #allposts, #postComment {
+  max-width: 80%;
+  text-align: center;
+  margin-left: 10%;
+  border: 1px solid #000000;
+  background: #ffffff;
+}
+
+.left {
+  float: left;
+  margin-left: 5%;
+}
+
+#postComment {
+  height: 300px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+#allposts {
+  margin-bottom: 20px;
+}
+
+.elementPost {
+  margin: 20px 5% 20px 5%;
+  width: 90%;
+  text-align: left;
+  height: fit-content;
+  border: 1px solid #000000;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 20px;
+}
+
+.postUser {
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 5px;
+}
+
+.elementUser {
+  font-family: sans-serif;
+  font-weight: bold;
+  color: #000000;
+}
+.nav-item .elementUser:hover {
+  text-decoration: none;
+  color: #7393B3;
+}
+.elementUser:hover {
+  text-decoration: none;
+  color: #7393B3;
+}
+
+.followersDiv {
+  width: 90%;
+  height: fit-content;
+  margin: 5px 5%;
+}
+
+.elementTime {
+  margin: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  color: #818589;
+}
+
+#followDiv {
+  height: 300px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.postContent {
+  width: 95%;
+  margin-left: 2.5%;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-weight: normal;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  color: #000000;
+}
+
+.postLike {
+  text-align: center;
+  width: 90%;
+  margin: 5px 5%;
+}
+
+.dislikeHeart, .likeHeart {
+  font-size: 20px;
+}
+
+.likeHeart {
+  color: #DE3163;
+}
+
+.dislikeHeart {
+  color: #000000;
+}
+
+h3 {
+  font: bolder;
+}
+
+/*# sourceMappingURL=styles.css.map */
