@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import *
 
-class LikeAdmin(admin.ModelAdmin):
+class newPostAdmin(admin.ModelAdmin):
     filter_horizontal = ('likers', 'haters',)
 
 class UserAdmin(admin.ModelAdmin):
@@ -9,5 +9,5 @@ class UserAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(User, UserAdmin)
-admin.site.register(newPost)
-admin.site.register(Like, LikeAdmin)
+admin.site.register(newPost, newPostAdmin)
+#admin.site.register(Like, LikeAdmin)

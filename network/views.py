@@ -12,53 +12,43 @@ from django.core.paginator import Paginator
 from .models import *
 from .forms import newPostForm
 
-def pages(request, page):
-    data = newPost.objects.all()
-    count = len(data) 
+def collect(request, word):
+    if word == "allPosts":
+        # Return all posts 
+        posts = newPost.objects.all()
 
-    if count%10 == 0:
-        maxP = count/10
+    elif word == "following":
+        users = User.objects.get(pk=request.user.id).following.all()
+        posts = newPost.objects.filter(poster__in = users)
+
     else:
-        maxP = int(math.trunc(count/10) + 1)
-    
-    if page >= maxP:
-        return JsonResponse({"error": "Data does not exist"}, status=404)
-
-    # Get start and end points
-    start = 0 + 10 * page
-
-    # Posts left:
-    postsLeft = count - start 
-
-    if postsLeft >= 10:
-        end = start + 10
-    else:
-        end = start + postsLeft
-   
-    print(f"end: {end}")
-    # Generate list of posts
-    posts = []
-    for i in range(start, end):
-        posts.append(data[i])
-
-    # Artificially delay speed of response
-    #time.sleep(1)
-    return JsonResponse([post.serialize() for post in posts], safe=False)
-
-def collect(request):
-    # Return all posts 
-    posts = newPost.objects.all()
+        try:
+            userPosting = User.objects.get(username=word)
+        except User.DoesNotExist:
+            return JsonResponse({"error": "This user does not exists."}, status=404)
+        
+        posts = newPost.objects.filter(poster = User.objects.get(username=word))
     return JsonResponse([post.serialize() for post in posts], safe=False)
 
 def postsUser(request, word, page):
-    try:
-        userPosting = User.objects.get(username=word)
-    except User.DoesNotExist:
-        return JsonResponse({"error": "This user does not exists."}, status=404)
+    if word == "allPosts":
+        data = newPost.objects.all()
     
-    #return all posts filter by user
-    data = newPost.objects.filter(poster = User.objects.get(username=word))
+    elif word == "following":
+        users = User.objects.get(pk=request.user.id).following.all()
+        data = newPost.objects.filter(poster__in = users)
+    
+    else:
+        try:
+            userPosting = User.objects.get(username=word)
+        except User.DoesNotExist:
+            return JsonResponse({"error": "This user does not exists."}, status=404)
+        
+        #return all posts filter by user
+        data = newPost.objects.filter(poster = userPosting)
     count = len(data)
+    
+    print(f"number of posts: {count}")
 
     if count%10 == 0:
         maxP = count/10
@@ -89,6 +79,47 @@ def postsUser(request, word, page):
     return JsonResponse([post.serialize() for post in posts], safe=False)
 
 @csrf_exempt
+def post(request, post_id):
+    # Query for requested post
+    try:
+        postData = newPost.objects.get(pk = post_id)
+    except newPost.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+
+    if request.method == "GET":
+        return JsonResponse(postData.serialize(), safe=False)
+
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+
+        if data.get("content") is not None:
+            postData.content = data["content"]
+            postData.save()
+            return HttpResponse(status=204)
+
+        if data.get("likers") is not None:
+            likersList = data["likers"]
+
+            users = User.objects.filter(username__in=likersList)
+
+            postData.likers.set(users)
+            postData.save()
+
+            return HttpResponse(status=204)
+        elif data.get("haters") is not None:
+            hatersList = data["haters"]
+
+            users = User.objects.filter(username__in=hatersList)
+
+            postData.haters.set(users)
+            postData.save()
+
+            return HttpResponse(status=204)
+    
+    else:
+        return JsonResponse({"error": "GET or PUT request required"})
+
+@csrf_exempt
 def follow(request, word):
     #  Query for requested user's profile:
     try:
@@ -104,10 +135,9 @@ def follow(request, word):
     elif request.method == "PUT":
         data = json.loads(request.body)
 
-        
         followingList = data["following"]
 
-        print(f"data to Update: {followingList}")
+        #print(f"data to Update: {followingList}")
         print(f"length of data to Update: {len(followingList)}")
 
         users = User.objects.filter(username__in=followingList)
@@ -148,7 +178,7 @@ def compose(request):
 
 def index(request):
     form = newPostForm()
-    listPosts = newPost.objects.all()
+    #listPosts = newPost.objects.all()
 #    count = len(listPosts)
  #   if count%10 == 0:
   #      pages = count/10
@@ -203,10 +233,15 @@ def register(request):
             })
 
         # Attempt to create new user
-        try:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-        except IntegrityError:
+        if username != "allPosts" and username != "following":
+            try:
+                user = User.objects.create_user(username, email, password)
+                user.save()
+            except IntegrityError:
+                return render(request, "network/register.html", {
+                    "message": "Username already taken."
+                })
+        else: 
             return render(request, "network/register.html", {
                 "message": "Username already taken."
             })

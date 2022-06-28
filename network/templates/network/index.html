@@ -13,16 +13,16 @@
             {% endfor %}
         </br>
             <!--<textarea autofocus id="compose-content"></textarea>-->
+            <div id="char_count">255/255</div>
             <input type="submit" value="Post" class="btn btn-primary left">
         </form>
     </div>
-
+    
     <div id="followDiv">
-        <!--<button class="btn btn-primary"></button>-->
     </div>
 
     <div id ="allposts">
-        <h3>All Posts</h3>
+        <h3 id="h3AllPosts">All Posts</h3>
         <div id="divposts">
             
         </div>
@@ -32,9 +32,17 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item btn page-link" id="first" style="margin-right:1em">First</li>
-                <li class="page-item btn page-link" id="previous">Previous</li>
-                <li class="page-item btn page-link" id="next">Next</li>
+                <li class="page-item btn page-link" id="firstFollow" style="margin-right:1em">First</li>
+                <li class="page-item btn page-link" id="firstFollowing" style="margin-right:1em">First</li>
+                <li class="page-item btn page-link" id="previous" style="margin-right:1px">Previous</li>
+                <li class="page-item btn page-link" id="previousFollow" style="margin-right:1px">Previous</li>
+                <li class="page-item btn page-link" id="previousFollowing" style="margin-right:1px">Previous</li>
+                <li class="page-item btn page-link" id="next" style="margin-left:1px">Next</li>
+                <li class="page-item btn page-link" id="nextFollow" style="margin-left:1px">Next</li>
+                <li class="page-item btn page-link" id="nextFollowing" style="margin-left:1px">Next</li>
                 <li class="page-item btn page-link" id="last" style="margin-left:1em">Last</li>
+                <li class="page-item btn page-link" id="lastFollow" style="margin-left:1em">Last</li>
+                <li class="page-item btn page-link" id="lastFollowing" style="margin-left:1em">Last</li>
             </ul>
           </nav>
     </div>
@@ -44,4 +52,5 @@
 
 {% block script %}
     <script src="{% static 'network/index.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
 {% endblock %}
